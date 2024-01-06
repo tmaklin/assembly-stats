@@ -3,7 +3,8 @@
 
 TEST(Stats, HumanReadable)
 {
-    Stats s("test_files/stats_unittest.fasta");
+    std::ifstream in("test_files/stats_unittest.fasta");
+    Stats s("test_files/stats_unittest.fasta", in);
     string expected = "stats for test_files/stats_unittest.fasta\n\
 sum = 21, n = 5, ave = 4.20, largest = 8\n\
 N50 = 6, n = 2\n\
@@ -20,7 +21,8 @@ Gaps = 2\n\
     EXPECT_EQ(0, expected.compare(got));
 
     // Test gzipped input
-    Stats s2("test_files/stats_unittest.fasta.gz");
+    bxz::ifstream in2("test_files/stats_unittest.fasta.gz");
+    Stats s2("test_files/stats_unittest.fasta.gz", in2);
     got = s.toString(FORMAT_HUMAN);
     EXPECT_EQ(0, expected.compare(got));
 }
@@ -28,7 +30,8 @@ Gaps = 2\n\
 
 TEST(Stats, Greppy)
 {
-    Stats s("test_files/stats_unittest.fasta");
+    std::ifstream in("test_files/stats_unittest.fasta");
+    Stats s("test_files/stats_unittest.fasta", in);
     string expected = "test_files/stats_unittest.fasta\ttotal_length\t21\n\
 test_files/stats_unittest.fasta\tnumber\t5\n\
 test_files/stats_unittest.fasta\tmean_length\t4.20\n\
@@ -60,7 +63,8 @@ test_files/stats_unittest.fasta\tn90n\t4\n\
     EXPECT_EQ(0, expected.compare(got));
 
     // Test gzipped input
-    Stats s2("test_files/stats_unittest.fasta.gz");
+    bxz::ifstream in2("test_files/stats_unittest.fasta.gz");
+    Stats s2("test_files/stats_unittest.fasta.gz", in2);
     got = s.toString(FORMAT_GREPPY);
     EXPECT_EQ(0, expected.compare(got));
 }
@@ -68,7 +72,8 @@ test_files/stats_unittest.fasta\tn90n\t4\n\
 
 TEST(Stats, TabDelimited)
 {
-    Stats s("test_files/stats_unittest.fasta");
+    std::ifstream in("test_files/stats_unittest.fasta");
+    Stats s("test_files/stats_unittest.fasta", in);
     string expected = "filename\ttotal_length\tnumber\tmean_length\tlongest\tshortest\tN_count\tGaps\tN50\tN50n\tN70\tN70n\tN90\tN90n\n\
 test_files/stats_unittest.fasta\t21\t5\t4.20\t8\t1\t4\t2\t6\t2\t4\t3\t2\t4\n\
 ";
@@ -77,7 +82,8 @@ test_files/stats_unittest.fasta\t21\t5\t4.20\t8\t1\t4\t2\t6\t2\t4\t3\t2\t4\n\
     EXPECT_EQ(0, expected.compare(got));
 
     // Test gzipped input
-    Stats s2("test_files/stats_unittest.fasta.gz");
+    bxz::ifstream in2("test_files/stats_unittest.fasta.gz");
+    Stats s2("test_files/stats_unittest.fasta.gz", in2);
     got = s.toString(FORMAT_TAB);
     EXPECT_EQ(0, expected.compare(got));
 }
@@ -85,13 +91,15 @@ test_files/stats_unittest.fasta\t21\t5\t4.20\t8\t1\t4\t2\t6\t2\t4\t3\t2\t4\n\
 
 TEST(Stats, TabDelimitedNoHeader)
 {
-    Stats s("test_files/stats_unittest.fasta");
+    std::ifstream in("test_files/stats_unittest.fasta");
+    Stats s("test_files/stats_unittest.fasta", in);
     string expected = "test_files/stats_unittest.fasta\t21\t5\t4.20\t8\t1\t4\t2\t6\t2\t4\t3\t2\t4\n";
     string got = s.toString(FORMAT_TAB_NO_HEAD);
     EXPECT_EQ(0, expected.compare(got));
 
     // Test gzipped input
-    Stats s2("test_files/stats_unittest.fasta.gz");
+    bxz::ifstream in2("test_files/stats_unittest.fasta.gz");
+    Stats s2("test_files/stats_unittest.fasta.gz", in2);
     got = s.toString(FORMAT_TAB_NO_HEAD);
     EXPECT_EQ(0, expected.compare(got));
 }

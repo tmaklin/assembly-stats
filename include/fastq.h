@@ -27,7 +27,7 @@ public:
 
     // reads next sequence from file, filling contents appropriately
     // Returns true if worked ok, false if at end of file
-    bool fillFromFile(bxz::ifstream& inStream);
+    bool fillFromFile(istream& inStream);
 
 private:
     string qual_;

@@ -27,16 +27,13 @@ Stats::Stats()
 }
 
 
-Stats::Stats(string filename, unsigned long minimumLength)
+Stats::Stats(string filename, istream &inStream, unsigned long minimumLength)
 {
     init();
     vector<int> seqLengths;
-    bxz::ifstream inStream;
     unsigned long cumulativeLength = 0;
 
-    inStream.open(filename.c_str());
-
-    if (! inStream.is_open())
+    if (! inStream.good())
     {
         cerr << "Error opening file '" << filename << "'" << endl;
         exit(1);
@@ -84,8 +81,6 @@ Stats::Stats(string filename, unsigned long minimumLength)
 
         delete seq;
     }
-
-    inStream.close();
 
     if (seqLengths.size() == 0)
     {

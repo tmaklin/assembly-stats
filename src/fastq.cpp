@@ -33,7 +33,7 @@ void Fastq::qual(string s)
 }
 
 
-bool Fastq::fillFromFile(bxz::ifstream& inStream)
+bool Fastq::fillFromFile(istream& inStream)
 {
     string line;
     getline(inStream, line);

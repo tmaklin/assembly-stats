@@ -5,6 +5,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+
+#include "bxzstr.hpp"
+
 #include "fasta.h"
 #include "fastq.h"
 #include "filetype.h"
@@ -21,7 +24,7 @@ class Stats
 {
 public:
     Stats();
-    Stats(string filename, unsigned long minimumLength=1);
+    Stats(string filename, istream &inStream, unsigned long minimumLength=1);
 
     // return a string containing the stats. format must be one
     // of: FORMAT_{HUMAN, TAB, TAB_NO_HEAD, GREPPY}

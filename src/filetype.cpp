@@ -1,6 +1,6 @@
 #include "filetype.h"
 
-short fastaOrFastq(bxz::ifstream &inStream)
+short fastaOrFastq(istream &inStream)
 {
     char firstChar = inStream.peek();
     switch (firstChar)

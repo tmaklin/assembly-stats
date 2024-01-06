@@ -4,6 +4,8 @@
 #include <cstring>
 #include <vector>
 
+#include "bxzstr.hpp"
+
 #include "fasta.h"
 #include "fastq.h"
 #include "filetype.h"
@@ -28,25 +30,27 @@ int main(int argc, char* argv[])
 
     for (int i = ops.infileStartIndex; i < argc; i++)
     {
-        Stats s(argv[i], ops.minLength);
-        if (ops.outFormat == FORMAT_HUMAN)
-        {
-            if (first)
-            {
-                first = false;
-            }
-            else
-            {
-                cout << string(79, '-') << endl;
-            }
-        }
+	bxz::ifstream infile(argv[i]);
+	Stats s(argv[i], infile, ops.minLength);
+	infile.close();
+	if (ops.outFormat == FORMAT_HUMAN)
+	    {
+		if (first)
+		    {
+			first = false;
+		    }
+		else
+		    {
+			cout << string(79, '-') << endl;
+		    }
+	    }
 
-        cout << s.toString(ops.outFormat);
+	cout << s.toString(ops.outFormat);
 
-        if (ops.outFormat == FORMAT_TAB)
-        {
-            ops.outFormat = FORMAT_TAB_NO_HEAD;
-        }
+	if (ops.outFormat == FORMAT_TAB)
+	    {
+		ops.outFormat = FORMAT_TAB_NO_HEAD;
+	    }
 
     }
 

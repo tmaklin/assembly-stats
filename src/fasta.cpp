@@ -95,7 +95,7 @@ vector< pair<unsigned long, unsigned long> > Fasta::gaps() const
 }
 
 
-bool Fasta::fillFromFile(bxz::ifstream& inStream)
+bool Fasta::fillFromFile(istream& inStream)
 {
     string line;
     seq_ = "";
