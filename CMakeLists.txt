@@ -72,6 +72,16 @@ else()
 endif()
 include_directories(${CMAKE_BXZSTR_HEADERS})
 
+## agc
+set(CMAKE_AGC_LIBRARY "/home/temaklin/software/agc/libagc.a")
+set(CMAKE_AGC_HEADERS "/home/temaklin/software/agc/src/core")
+target_link_libraries(assembly-stats ${CMAKE_AGC_LIBRARY})
+include_directories(${CMAKE_AGC_HEADERS})
+
+## agc-istream
+set(CMAKE_AGC-ISTREAM_HEADERS "/home/temaklin/software/agc_istream")
+include_directories(${CMAKE_AGC-ISTREAM_HEADERS})
+
 target_link_libraries(stats fasta fastq filetype)
 target_link_libraries(assembly-stats stats)
 

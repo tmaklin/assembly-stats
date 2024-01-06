@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "bxzstr.hpp"
+#include "agc_istream.hpp"
 
 #include "fasta.h"
 #include "fastq.h"
@@ -31,6 +32,8 @@ int main(int argc, char* argv[])
     for (int i = ops.infileStartIndex; i < argc; i++)
     {
 	bxz::ifstream infile(argv[i]);
+	short filetype = fastaOrFastq(infile);
+	if (filetype == FASTA_FILE || filetype == FASTQ_FILE) {
 	Stats s(argv[i], infile, ops.minLength);
 	infile.close();
 	if (ops.outFormat == FORMAT_HUMAN)
@@ -51,6 +54,33 @@ int main(int argc, char* argv[])
 	    {
 		ops.outFormat = FORMAT_TAB_NO_HEAD;
 	    }
+	} else {
+	    // Try agc archive
+	    agc::istream archive(argv[i]);
+	    const vector<string> &sample_names = archive.list_samples();
+	    for (auto sample : sample_names) {
+		archive.find(sample);
+		Stats s(sample, archive, ops.minLength);
+		if (ops.outFormat == FORMAT_HUMAN)
+		    {
+			if (first)
+			    {
+				first = false;
+			    }
+			else
+			    {
+				cout << string(79, '-') << endl;
+			    }
+		    }
+
+		cout << s.toString(ops.outFormat);
+
+		if (ops.outFormat == FORMAT_TAB)
+		    {
+			ops.outFormat = FORMAT_TAB_NO_HEAD;
+		    }
+	    }
+	}
 
     }
 
